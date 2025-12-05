@@ -28,7 +28,7 @@ async def broadcast_world_state() -> None:
         return
     msg = encode_message(MessageType.WORLD_STATE, world.to_dict())
     await asyncio.gather(
-        *[c.send(msg) for c in list(clients)],
+        *(c.send(msg) for c in clients),
         return_exceptions=True
     )
 

@@ -61,7 +61,10 @@ function connectWebSocket() {
 
 async function start() {
   try {
-    ({ device, context, format } = await initWebGPU(canvas));
+    const gpuContext = await initWebGPU(canvas);
+    device = gpuContext.device;
+    context = gpuContext.context;
+    format = gpuContext.format;
     pipeline = createBasicPipeline(device, format);
   } catch (e) {
     console.error(e);
