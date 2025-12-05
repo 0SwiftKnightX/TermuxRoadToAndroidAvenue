@@ -52,13 +52,13 @@ class WebSocketServer:
         
         try:
             async for message in websocket:
-                await self.process_message(message)
+                await self.process_message(message, websocket)
         except websockets.exceptions.ConnectionClosed:
             logger.info("Client connection closed")
         finally:
             await self.unregister(websocket)
             
-    async def process_message(self, raw_message: str):
+    async def process_message(self, raw_message: str, sender: WebSocketServerProtocol):
         """Process incoming message and broadcast updates"""
         try:
             msg = parse_message(raw_message)
@@ -75,6 +75,8 @@ class WebSocketServer:
                         await self.broadcast(event_msg)
                     else:
                         logger.warning(f"Command failed or unknown: {command}")
+                        error_msg = create_error_message(f"Command failed or unknown: {command}")
+                        await sender.send(error_msg)
                         
             elif msg_type == MessageType.PING:
                 # Simple ping/pong for connection health
@@ -83,8 +85,7 @@ class WebSocketServer:
         except ValueError as e:
             logger.error(f"Invalid message received: {e}")
             error_msg = create_error_message(str(e))
-            # Note: We'd need to track which client sent the message to respond directly
-            # For now, just log the error
+            await sender.send(error_msg)
             
     async def start(self):
         """Start the WebSocket server"""

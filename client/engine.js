@@ -19,6 +19,10 @@ export class Engine {
             position: [0, 3, 8],
             rotation: [0, 0, 0]
         };
+        // Uniform buffer layout: mat4x4 (16 floats) + vec4 color (4 floats)
+        this.UNIFORM_BUFFER_SIZE = 20;
+        this.UNIFORM_MVP_OFFSET = 0;
+        this.UNIFORM_COLOR_OFFSET = 16;
     }
     
     async initialize() {
@@ -247,10 +251,10 @@ export class Engine {
         const mvp = this.createMVPMatrix(entity);
         const color = new Float32Array(entity.color);
         
-        // Update uniform buffer
-        const uniformData = new Float32Array(20); // 16 for mat4 + 4 for color
-        uniformData.set(mvp, 0);
-        uniformData.set(color, 16);
+        // Update uniform buffer (mat4x4 MVP + vec4 color)
+        const uniformData = new Float32Array(this.UNIFORM_BUFFER_SIZE);
+        uniformData.set(mvp, this.UNIFORM_MVP_OFFSET);
+        uniformData.set(color, this.UNIFORM_COLOR_OFFSET);
         
         this.gpuContext.device.queue.writeBuffer(
             this.uniformBuffer,
