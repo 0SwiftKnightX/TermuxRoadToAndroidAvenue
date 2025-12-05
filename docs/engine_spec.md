@@ -1,16 +1,48 @@
-Understood.
-I will now generate only the clean, code-focused engine_spec.md and stop afterward.
-This file will be:
-• concise
-• development-friendly
-• easy for GitHub Copilot to parse
-• strictly technical (no lore)
-• focused on architecture
-• defining only the systems needed to build the engine
-The Universe Bible comes next after your signal, not now.
-⭐ docs/engine_spec.md
-(Copy/paste this EXACTLY as-is into your repo)
-# T-R-A-V-I Engine Specification **TermuxRoadToAndroidAvenue – Core Engine Architecture** **Codename:** T-R-A-V-I **Purpose:** A modular, extensible game engine where: - The **game is the editor** - The **editor is the game** - An AI assistant can modify code, assets, and world state - Worlds, avatars, entities, and environments are **procedural and data-driven** - Everything runs on **Android (Termux)** + **Browser (WebGPU)** using a live WebSocket bridge This file defines the **minimum stable structure** the engine must follow. --- # 1. Runtime Overview ## 1.1 Backend (Termux – Python) Responsibilities: - WebSocket server - World state authority - Command handling - Entity lifecycle management - Procedural generation hooks - Future AI agent integration ## 1.2 Client (Browser – WebGPU) Responsibilities: - Rendering - Scene management - Input capture - Sync with backend state - Editor overlays - Procedural graphics hooks ## 1.3 Communication Layer Backend ↔ Client via WebSocket JSON. Backend owns truth; client mirrors it. --- # 2. Project Structure 
+# T-R-A-V-I Engine Specification
+
+**TermuxRoadToAndroidAvenue – Core Engine Architecture**
+
+**Codename:** T-R-A-V-I
+
+**Purpose:** A modular, extensible game engine where:
+- The **game is the editor** and the **editor is the game**
+- An AI assistant can modify code, assets, and world state
+- Worlds, avatars, entities, and environments are **procedural and data-driven**
+- Everything runs on **Android (Termux)** + **Browser (WebGPU)** using a live WebSocket bridge
+
+This file defines the **minimum stable structure** the engine must follow.
+
+---
+
+# 1. Runtime Overview
+
+## 1.1 Backend (Termux – Python)
+
+Responsibilities:
+- WebSocket server
+- World state authority
+- Command handling
+- Entity lifecycle management
+- Procedural generation hooks
+- Future AI agent integration
+
+## 1.2 Client (Browser – WebGPU)
+
+Responsibilities:
+- Rendering
+- Scene management
+- Input capture
+- Sync with backend state
+- Editor overlays
+- Procedural graphics hooks
+
+## 1.3 Communication Layer
+
+Backend ↔ Client via WebSocket JSON. Backend owns truth; client mirrors it.
+
+---
+
+# 2. Project Structure 
 server/ init.py main.py ws_server.py command_router.py world_state.py messages.py ai_hooks.py
 client/ index.html main.js ws-client.js engine.js webgpu-context.js scene.js avatar.js debug-ui.js
 docs/ engine_spec.md setup_termux.md pipeline_overview.md
@@ -99,6 +131,9 @@ The following systems exist but are defined elsewhere:
 • Weather Engine
 • Terrain Destruction Engine
 • Weapon System (8-layer)
+
 This file defines architecture only.
-End of engine_spec.md
---- # ⭐ Done. I have generated the full, clean **engine_spec.md** exactly as required. If you want, I can now proceed with: ### ✔ `universal_interaction_engine.md` (the massive universe bible), or ### ✔ `setup_termux.md`, or ### ✔ `pipeline_overview.md`, or ### ✔ scaffolding code. Just tell me the next step.
+
+---
+
+**End of engine_spec.md**
