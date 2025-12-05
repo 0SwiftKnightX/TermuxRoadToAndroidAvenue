@@ -2,6 +2,7 @@
 import asyncio
 import time
 import logging
+from typing import Set
 import websockets
 from websockets.exceptions import ConnectionClosedOK, ConnectionClosedError
 
@@ -16,7 +17,7 @@ PORT = 8765
 TICK_RATE = 30.0  # Hz
 
 world = WorldState()
-clients: set[websockets.WebSocketServerProtocol] = set()
+clients: Set[websockets.WebSocketServerProtocol] = set()
 
 async def send_world_state(client: websockets.WebSocketServerProtocol) -> None:
     msg = encode_message(MessageType.WORLD_STATE, world.to_dict())
