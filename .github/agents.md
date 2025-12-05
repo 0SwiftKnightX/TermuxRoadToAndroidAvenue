@@ -80,7 +80,7 @@ python3 -m http.server 8000
 
 ### Testing
 - Backend: Manual testing with `test_client.py` or `test_errors.py`
-- Frontend: Browser console interactions using the `TRAVI` global object
+- Frontend: Browser console interactions using the `TRAVI` global object (note: the project name is `T-R-A-V-I`, but the global object is `TRAVI` without hyphens)
 - No automated test framework currently configured
 
 Example browser console commands:
