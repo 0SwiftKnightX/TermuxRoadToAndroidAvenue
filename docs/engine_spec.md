@@ -1051,6 +1051,52 @@ You can paste this straight into `docs/engine_spec.md` in your repo and then tel
 requestAnimationFrame(frame): apply incoming updates update scene logic render via WebGPU
 --- # 4. Data Model ## 4.1 Entity Representation Backend stores entities as dictionaries: ```json { "entity_id": "cube_1", "type": "cube", "position": [0, 1, 0], "rotation": [0, 0, 0], "scale": [1, 1, 1], "color": [1, 0, 0, 1], "meta": {} } 
 More complex entity types (avatars, props, terrain) will extend this schema.
+
+## 4.2 Player & Pet Entity Models
+
+### Player Model
+```json
+{
+  "entity_id": "player_001",
+  "type": "player",
+  "position": [0,1,0],
+  "rotation": [0,0,0],
+  "scale": [1,1,1],
+  "color": [1,1,1,1],
+  "stats": {"health":100,"stamina":100,"mana":50,"level":1,"experience":0},
+  "movement": {"speed":5.0,"jump_strength":1.5},
+  "inventory": [],
+  "meta": {"player_name":"","class":"none","race":"none"}
+}
+```
+
+### Pet Model
+```json
+{
+  "entity_id": "pet_001",
+  "type": "pet",
+  "position": [0,1,0],
+  "rotation":[0,0,0],
+  "scale":[0.8,0.8,0.8],
+  "stats":{"health":50,"loyalty":100},
+  "behavior":{"mode":"follow","target_id":"player_001"},
+  "meta":{"species":"wolf","abilities":[]}
+}
+```
+
+### Backend Requirements
+- Must recognize `"type": "player"` and `"type": "pet"`
+- Auto-update pet following behavior
+- Broadcast state updates to clients
+- Validate stat changes
+
+### Client Requirements
+- `avatar.js` generates player model
+- pets render with placeholder mesh (capsule/sphere)
+- scene graph attaches pets to player for follow behavior
+
+---
+
 5. Message Protocol (WebSocket JSON)
 5.1 Envelope
 { "type": "COMMAND" | "EVENT" | "STATE" | "ERROR" | "PING", "payload": {} } 
@@ -1096,15 +1142,47 @@ Terminal commands map 1:1 to backend actions.
 Example:
 spawn cube_1 x=0 y=1 z=0 color=red 
 9. Debugging System (Minimum)
-debug-ui.js must display:
-• connection status
-• error messages
-• recent commands
-• selected entity data
-Backend must log:
-• bad messages
-• unknown commands
-• state mutations
+
+## 9.1 Debug UI Specification
+
+The Debug UI (`debug-ui.js`) provides real-time visibility into engine activity.
+
+### UI Responsibilities
+Must display:
+- WebSocket connection status: `CONNECTED | DISCONNECTED | RECONNECTING | ERROR`
+- Last 20 commands sent
+- Last 20 events received
+- Selected entity inspector
+- Error stream
+
+### Selected Entity Inspector Format
+```json
+{
+  "entity_id": "",
+  "type": "",
+  "position": [],
+  "rotation": [],
+  "scale": [],
+  "color": [],
+  "meta": {}
+}
+```
+
+### Backend Logging Format
+```
+[WS-IN]  <timestamp> <raw_message>
+[WS-OUT] <timestamp> <raw_message>
+[STATE]  <timestamp> entity <id> mutated <field>
+[ERROR]  <timestamp> <description>
+```
+
+### Debug UI Hooks
+- onWebSocketMessage(msg)
+- onWorldStateUpdate(full_state)
+- onEntitySelected(entity_id)
+- onCommandSent(cmd)
+
+---
 10. AI Integration Hooks
 ai_hooks.py placeholder API:
 def on_world_update(world_state): pass def on_command_received(cmd): pass 
