@@ -29,7 +29,7 @@ Verify installation:
 python --version
 ```
 
-You should see Python 3.9 or higher.
+You should see Python 3.9 or higher (the exact version depends on Termux package availability).
 
 ### 4. Install Git (Optional, for cloning)
 
@@ -196,9 +196,9 @@ pip install --force-reinstall -r requirements.txt
 - Check firewall settings
 
 **"WebGPU not supported"**
-- Use a modern browser with WebGPU support (Chrome, Edge, or Opera - latest stable version recommended)
+- Use a modern browser with WebGPU support (Chrome, Firefox, Edge, or Opera - latest stable version recommended)
 - Update your browser to the latest version
-- Check `chrome://gpu` to verify WebGPU support
+- Check `chrome://gpu` (or `about:support` in Firefox) to verify WebGPU support
 
 ### Performance Issues
 
@@ -219,7 +219,7 @@ pip install --force-reinstall -r requirements.txt
 Edit `server/main.py`:
 ```python
 if __name__ == "__main__":
-    asyncio.run(main(port=9000))  # Change 8765 to your port
+    asyncio.run(main(port=9000))  # Change to your desired port
 ```
 
 ### Running Server in Background

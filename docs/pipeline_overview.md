@@ -200,7 +200,7 @@ All messages are JSON with an envelope structure:
   "type": "MESSAGE_TYPE",
   "name": "specific_action",
   "payload": { /* type-specific data */ },
-  "timestamp": 1234567890
+  "timestamp": 1672531200  // Unix timestamp (example)
 }
 ```
 
@@ -472,9 +472,9 @@ Both clients see the same entity in real-time.
 
 The server logs all major operations:
 ```
-[TIMESTAMP] Client connected: ws://localhost:8765
-[TIMESTAMP] Command: spawn_entity -> cube1
-[TIMESTAMP] Broadcasting entity_spawned to 1 clients
+[12:34:56] Client connected: ws://localhost:8765
+[12:34:57] Command: spawn_entity -> cube1
+[12:34:58] Broadcasting entity_spawned to 1 clients
 ```
 
 ### Client Debug UI
