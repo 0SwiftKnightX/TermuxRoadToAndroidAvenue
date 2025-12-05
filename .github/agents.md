@@ -198,9 +198,9 @@ Phase 1 is the current focus. Future phases will add:
 
 ## Key Resources
 
-- [Engine Specification](../docs/engine_spec.md) - Complete technical specification
-- [README](../README.md) - Project overview and quick start
-- [Server Requirements](../server/requirements.txt) - Python dependencies
+- [Engine Specification](docs/engine_spec.md) - Complete technical specification
+- [README](README.md) - Project overview and quick start
+- [Server Requirements](server/requirements.txt) - Python dependencies
 
 ## Agent Behavior
 
