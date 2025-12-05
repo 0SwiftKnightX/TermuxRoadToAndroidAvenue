@@ -29,7 +29,7 @@ Verify installation:
 python --version
 ```
 
-You should see Python 3.8 or higher.
+You should see Python 3.9 or higher.
 
 ### 4. Install Git (Optional, for cloning)
 
@@ -196,7 +196,7 @@ pip install --force-reinstall -r requirements.txt
 - Check firewall settings
 
 **"WebGPU not supported"**
-- Use a modern browser: Chrome 113+, Edge 113+, or Opera 99+
+- Use a modern browser with WebGPU support (Chrome, Edge, or Opera - latest stable version recommended)
 - Update your browser to the latest version
 - Check `chrome://gpu` to verify WebGPU support
 

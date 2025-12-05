@@ -472,9 +472,9 @@ Both clients see the same entity in real-time.
 
 The server logs all major operations:
 ```
-[2025-12-05 13:30:00] Client connected: ws://localhost:8765
-[2025-12-05 13:30:01] Command: spawn_entity -> cube1
-[2025-12-05 13:30:02] Broadcasting entity_spawned to 1 clients
+[TIMESTAMP] Client connected: ws://localhost:8765
+[TIMESTAMP] Command: spawn_entity -> cube1
+[TIMESTAMP] Broadcasting entity_spawned to 1 clients
 ```
 
 ### Client Debug UI
