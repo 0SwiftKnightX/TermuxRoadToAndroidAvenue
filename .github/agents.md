@@ -41,7 +41,8 @@ T-R-A-V-I is a modular, extensible game engine where:
 │   ├── ai_hooks.py          # Placeholder for AI integration
 │   ├── test_client.py       # Test utilities
 │   ├── test_errors.py       # Error testing
-│   └── requirements.txt     # Python dependencies
+│   ├── requirements.txt     # Python dependencies
+│   └── README.md            # Server documentation
 ├── client/            # JavaScript/WebGPU frontend
 │   ├── index.html           # Main HTML shell
 │   ├── main.js              # Client entry point
@@ -50,7 +51,8 @@ T-R-A-V-I is a modular, extensible game engine where:
 │   ├── webgpu-context.js    # WebGPU setup
 │   ├── scene.js             # Scene graph/object registry
 │   ├── avatar.js            # Procedural avatar logic (placeholder)
-│   └── debug-ui.js          # Debug overlay
+│   ├── debug-ui.js          # Debug overlay
+│   └── README.md            # Client documentation
 ├── docs/              # Documentation
 │   ├── engine_spec.md       # Complete technical specification
 │   └── IMPLEMENTATION_SUMMARY.md
@@ -200,6 +202,8 @@ Phase 1 is the current focus. Future phases will add:
 
 - [Engine Specification](docs/engine_spec.md) - Complete technical specification
 - [README](README.md) - Project overview and quick start
+- [Server Documentation](server/README.md) - Backend setup and API
+- [Client Documentation](client/README.md) - Frontend setup and usage
 - [Server Requirements](server/requirements.txt) - Python dependencies
 
 ## Agent Behavior
