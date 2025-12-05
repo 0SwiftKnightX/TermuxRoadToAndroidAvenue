@@ -110,6 +110,8 @@ TRAVI.setColor("cube1", 0, 1, 0, 1);
 ## Documentation
 
 - [Engine Specification](docs/engine_spec.md) - Complete technical specification
+- [Pipeline Overview](docs/pipeline_overview.md) - Architecture and data flow diagrams
+- [Termux Setup Guide](docs/setup_termux.md) - Running on Android with Termux
 - [Server Documentation](server/README.md) - Backend setup and API
 - [Client Documentation](client/README.md) - Frontend setup and usage
 
