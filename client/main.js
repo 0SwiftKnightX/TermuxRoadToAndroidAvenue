@@ -1,53 +1,88 @@
-/**
- * T-R-A-V-I Engine - Main Entry Point
- */
+// client/main.js
+import {
+  initWebGPU,
+  resizeCanvasToDisplaySize,
+  createBasicPipeline,
+  renderTriangle,
+} from "./webgpu-core.js";
 
-import { Engine } from './engine.js';
-import { WSClient } from './ws-client.js';
-import { debugUI } from './debug-ui.js';
+const overlay = document.getElementById("overlay");
+const canvas = document.getElementById("gfx");
 
-class TRAVIApp {
-    constructor() {
-        this.canvas = document.getElementById('canvas');
-        this.engine = null;
-        this.wsClient = null;
-        this.wsUrl = 'ws://localhost:8765';
+// world state mirrored from backend
+let worldState = {
+  tick: 0,
+  cube_angle: 0,
+};
+
+let device, context, format, pipeline;
+
+// Adjust this if you expose the device on a LAN.
+// On same phone: ws://localhost:8765 is correct when backend runs in Termux.
+const WS_URL = "ws://localhost:8765";
+
+function setOverlay(text) {
+  if (overlay) overlay.textContent = text;
+}
+
+function connectWebSocket() {
+  const ws = new WebSocket(WS_URL);
+
+  ws.onopen = () => {
+    setOverlay("Connected to backend.");
+    ws.send(JSON.stringify({ type: "ping", payload: {} }));
+  };
+
+  ws.onmessage = (event) => {
+    try {
+      const msg = JSON.parse(event.data);
+      const { type, payload } = msg;
+
+      if (type === "hello") {
+        setOverlay("Hello from backend.");
+      } else if (type === "world_state") {
+        worldState = payload;
+      }
+    } catch (e) {
+      console.error("Bad message from server:", e);
     }
-    
-    async initialize() {
-        console.log('Initializing T-R-A-V-I...');
-        debugUI.log('Initializing T-R-A-V-I engine...');
-        
-        try {
-            // Initialize engine
-            this.engine = new Engine(this.canvas);
-            await this.engine.initialize();
-            debugUI.log('Engine initialized');
-            
-            // Setup WebSocket client
-            this.setupWebSocket();
-            
-            // Start engine
-            this.engine.start();
-            debugUI.log('Engine started');
-            
-            // Setup window resize handler
-            window.addEventListener('resize', () => this.engine.resize());
-            
-            console.log('T-R-A-V-I initialized successfully');
-            
-        } catch (error) {
-            console.error('Failed to initialize:', error);
-            debugUI.log(`ERROR: ${error.message}`, 'error');
-        }
-    }
-    
-    setupWebSocket() {
-        this.wsClient = new WSClient(this.wsUrl, (message) => this.handleMessage(message));
-        
-        this.wsClient.onConnect = () => {
-            console.log('Connected to server');
-            debugUI.setConnectionStatus(true);
+  };
+
+  ws.onclose = () => {
+    setOverlay("Disconnected. Reconnecting in 2s…");
+    setTimeout(connectWebSocket, 2000);
+  };
+
+  ws.onerror = () => {
+    setOverlay("WebSocket error.");
+  };
+}
+
+async function start() {
+  try {
+    ({ device, context, format } = await initWebGPU(canvas));
+    pipeline = createBasicPipeline(device, format);
+  } catch (e) {
+    console.error(e);
+    setOverlay("WebGPU error: " + e.message);
+    return;
+  }
+
+  connectWebSocket();
+
+  function frame() {
+    resizeCanvasToDisplaySize(canvas);
+
+    // For now, we ignore cube_angle; future: rotate geometry, camera, etc.
+    renderTriangle(device, context, pipeline);
+
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+}
+
+start();
             debugUI.log('Connected to server');
         };
         

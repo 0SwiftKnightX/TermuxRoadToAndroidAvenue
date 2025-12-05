@@ -1,73 +1,41 @@
-<!DOCTYPE html>
+<!-- client/index.html -->
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T-R-A-V-I Engine</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Courier New', monospace;
-            background: #000;
-            color: #0f0;
-            overflow: hidden;
-        }
-        
-        #canvas {
-            display: block;
-            width: 100vw;
-            height: 100vh;
-        }
-        
-        #debug-overlay {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid #0f0;
-            padding: 10px;
-            font-size: 12px;
-            max-width: 300px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        #debug-overlay h3 {
-            margin-bottom: 10px;
-            color: #0ff;
-        }
-        
-        #debug-overlay .status {
-            margin-bottom: 5px;
-        }
-        
-        #debug-overlay .connected {
-            color: #0f0;
-        }
-        
-        #debug-overlay .disconnected {
-            color: #f00;
-        }
-        
-        #debug-overlay .log-entry {
-            margin: 2px 0;
-            font-size: 10px;
-            color: #888;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <title>T-R-A-V-I Engine – WebGPU Shell</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #000;
+      color: #fff;
+      font-family: system-ui, sans-serif;
+    }
+    #overlay {
+      position: fixed;
+      top: 8px;
+      left: 8px;
+      font-size: 12px;
+      background: rgba(0,0,0,0.6);
+      padding: 4px 8px;
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 10;
+    }
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
-    <div id="debug-overlay">
-        <h3>T-R-A-V-I Debug</h3>
-        <div id="debug-content"></div>
-    </div>
-    
-    <script type="module" src="main.js"></script>
+  <div id="overlay">Connecting to backend…</div>
+  <canvas id="gfx"></canvas>
+
+  <script type="module" src="./main.js"></script>
 </body>
 </html>
